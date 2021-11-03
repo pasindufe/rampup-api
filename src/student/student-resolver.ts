@@ -21,6 +21,14 @@ export class StudentResolver {
     return this.studentService.save(student);
   }
 
+  @Mutation(() => [Student], { name: 'add_student_list' })
+  async addBulkStudents(
+    @Args({ name: 'students', type: () => [AddUpdateStudentRequest] })
+    students: AddUpdateStudentRequest[],
+  ): Promise<Student[]> {
+    return await this.studentService.saveList(students);
+  }
+
   @Mutation(() => Student, { name: 'updated_student' })
   async updateStudent(
     @Args('id') id: number,

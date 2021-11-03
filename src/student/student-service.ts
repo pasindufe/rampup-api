@@ -4,6 +4,7 @@ import { Student } from './student.model';
 import * as moment from 'moment';
 import { StudentResponse } from './dto/student-response';
 import { AddUpdateStudentRequest } from './dto/add-student-request';
+import { getConnection } from 'typeorm';
 
 export class StudentService {
   constructor(
@@ -42,6 +43,16 @@ export class StudentService {
       is_active: true,
     };
     return this.studentRepository.save(student);
+  }
+
+  async saveList(students: AddUpdateStudentRequest[]): Promise<Student[]> {
+    const result = await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(Student)
+      .values(students)
+      .execute();
+    return result.identifiers as Student[];
   }
 
   async update(id: number, student: Student): Promise<Student> {

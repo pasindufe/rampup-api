@@ -36,6 +36,7 @@ type Query {
 
 type Mutation {
   student(student: AddUpdateStudentRequest!): Student!
+  add_student_list(students: [AddUpdateStudentRequest!]!): [Student!]!
   updated_student(student: AddUpdateStudentRequest!, id: Float!): Student!
   deleted_student(id: Float!): Boolean!
 }
