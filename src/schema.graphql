@@ -2,6 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type StudentResponse {
+  id: Float!
+  name: String!
+  gender: String!
+  address: String!
+  mobile: String!
+  dob: DateTime!
+  age: Float!
+  is_active: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Student {
   id: Float!
   name: String!
@@ -14,31 +30,15 @@ type Student {
   is_active: Boolean!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type StudentResponse {
-  id: Float!
-  name: String!
-  gender: Float!
-  address: String!
-  mobile: String!
-  dob: DateTime!
-  age: Float!
-  is_active: Boolean!
-}
-
 type Query {
   students: [StudentResponse!]!
 }
 
 type Mutation {
-  student(student: AddUpdateStudentRequest!): Student!
-  add_student_list(students: [AddUpdateStudentRequest!]!): [Student!]!
-  updated_student(student: AddUpdateStudentRequest!, id: Float!): Student!
-  deleted_student(id: Float!): Boolean!
+  addStudent(student: AddUpdateStudentRequest!): Student!
+  addStudentList(students: [AddUpdateStudentRequest!]!): [Student!]!
+  updateStudent(student: AddUpdateStudentRequest!, id: Float!): Student!
+  deleteStudent(id: Float!): Boolean!
 }
 
 input AddUpdateStudentRequest {

@@ -8,7 +8,7 @@ export class StudentResponse {
   @Field()
   name: string;
   @Field()
-  gender: Gender;
+  gender: string;
   @Field()
   address: string;
   @Field()

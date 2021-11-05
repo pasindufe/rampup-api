@@ -14,14 +14,14 @@ export class StudentResolver {
     return await this.studentService.findAll();
   }
 
-  @Mutation(() => Student, { name: 'student' })
+  @Mutation(() => Student, { name: 'addStudent' })
   async addStudent(
     @Args('student') student: AddUpdateStudentRequest,
   ): Promise<Student> {
     return this.studentService.save(student);
   }
 
-  @Mutation(() => [Student], { name: 'add_student_list' })
+  @Mutation(() => [Student], { name: 'addStudentList' })
   async addBulkStudents(
     @Args({ name: 'students', type: () => [AddUpdateStudentRequest] })
     students: AddUpdateStudentRequest[],
@@ -29,7 +29,7 @@ export class StudentResolver {
     return await this.studentService.saveList(students);
   }
 
-  @Mutation(() => Student, { name: 'updated_student' })
+  @Mutation(() => Student, { name: 'updateStudent' })
   async updateStudent(
     @Args('id') id: number,
     @Args('student') student: AddUpdateStudentRequest,
@@ -37,7 +37,7 @@ export class StudentResolver {
     return this.studentService.update(id, student as Student);
   }
 
-  @Mutation(() => Boolean, { name: 'deleted_student' })
+  @Mutation(() => Boolean, { name: 'deleteStudent' })
   async deleteStudent(@Args('id') id: number) {
     return this.studentService.delete(id);
   }
