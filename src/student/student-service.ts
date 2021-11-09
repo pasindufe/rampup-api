@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Gender, Student } from './student.model';
+import { Student } from './student.model';
 import * as moment from 'moment';
 import { StudentResponse } from './dto/student-response';
 import { AddUpdateStudentRequest } from './dto/add-student-request';
@@ -30,7 +30,7 @@ export class StudentService {
           mobile: student.mobile,
           dob: student.dob,
           age: moment().diff(student.dob, 'year'),
-          gender: student.gender === Gender.MALE ? 'male' : 'female',
+          gender: student.gender,
           is_active: student.is_active,
         });
       });
