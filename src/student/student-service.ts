@@ -35,7 +35,7 @@ export class StudentService {
         });
       });
     } catch (ex) {
-      this.logger.log(ex);
+      this.logger.error(ex);
     }
     return response;
   }
@@ -52,7 +52,7 @@ export class StudentService {
       };
       return this.studentRepository.save(student);
     } catch (ex) {
-      this.logger.log(ex);
+      this.logger.error(ex);
     }
   }
 
@@ -66,7 +66,7 @@ export class StudentService {
         .execute();
       return result.identifiers as Student[];
     } catch (ex) {
-      this.logger.log(ex);
+      this.logger.error(ex);
     }
   }
 
@@ -77,7 +77,7 @@ export class StudentService {
       Object.assign(existingStudent, student);
       return this.studentRepository.save(existingStudent);
     } catch (ex) {
-      this.logger.log(ex);
+      this.logger.error(ex);
     }
   }
 
@@ -89,7 +89,7 @@ export class StudentService {
       this.studentRepository.save(existingStudent);
       return true;
     } catch (ex) {
-      this.logger.log(ex);
+      this.logger.error(ex);
       return false;
     }
   }
