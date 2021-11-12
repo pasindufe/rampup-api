@@ -36,6 +36,7 @@ export class StudentService {
       });
     } catch (ex) {
       this.logger.error(ex);
+      throw ex;
     }
     return response;
   }
@@ -53,6 +54,7 @@ export class StudentService {
       return this.studentRepository.save(student);
     } catch (ex) {
       this.logger.error(ex);
+      throw ex;
     }
   }
 
@@ -67,6 +69,7 @@ export class StudentService {
       return result.identifiers as Student[];
     } catch (ex) {
       this.logger.error(ex);
+      throw ex;
     }
   }
 
@@ -77,7 +80,10 @@ export class StudentService {
       Object.assign(existingStudent, student);
       return this.studentRepository.save(existingStudent);
     } catch (ex) {
+      console.log(ex);
+
       this.logger.error(ex);
+      throw ex;
     }
   }
 
