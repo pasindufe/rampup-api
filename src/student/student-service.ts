@@ -34,6 +34,7 @@ export class StudentService {
           is_active: student.is_active,
         });
       });
+      this.logger.log(`${students.length} students retrieved`);
     } catch (ex) {
       this.logger.error(ex);
       throw ex;
@@ -51,7 +52,9 @@ export class StudentService {
         dob: request.dob,
         is_active: true,
       };
-      return this.studentRepository.save(student);
+      const result = this.studentRepository.save(student);
+      this.logger.log('student created');
+      return result;
     } catch (ex) {
       this.logger.error(ex);
       throw ex;
@@ -66,6 +69,7 @@ export class StudentService {
         .into(Student)
         .values(students)
         .execute();
+      this.logger.log('bulk student created');
       return result.identifiers as Student[];
     } catch (ex) {
       this.logger.error(ex);
@@ -78,10 +82,10 @@ export class StudentService {
       const existingStudent = await this.studentRepository.findOne(id);
       if (!existingStudent) throw new Error("couldn't find student");
       Object.assign(existingStudent, student);
-      return this.studentRepository.save(existingStudent);
+      const result = this.studentRepository.save(existingStudent);
+      this.logger.log(`students id -${id} updated`);
+      return result;
     } catch (ex) {
-      console.log(ex);
-
       this.logger.error(ex);
       throw ex;
     }
@@ -93,6 +97,7 @@ export class StudentService {
       if (!existingStudent) throw new Error("couldn't find student");
       existingStudent.is_active = false;
       this.studentRepository.save(existingStudent);
+      this.logger.log(`students id -${id} deleted`);
       return true;
     } catch (ex) {
       this.logger.error(ex);
