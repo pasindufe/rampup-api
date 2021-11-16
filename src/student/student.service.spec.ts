@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { FindManyOptions, Repository } from 'typeorm';
 import { AddUpdateStudentRequest } from './dto/add-student-request';
 import { StudentService } from './student-service';
 import { Gender, Student } from './student.model';
@@ -70,7 +69,7 @@ describe('Student Service', () => {
 
   it('update student', async () => {
     const createNoteSpy = jest.spyOn(studentService, 'update');
-    const student = new Student();
+    const student = new AddUpdateStudentRequest();
     student.name = 'test';
     student.address = 'address';
     student.dob = new Date();

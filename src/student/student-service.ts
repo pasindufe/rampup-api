@@ -6,6 +6,7 @@ import { StudentResponse } from './dto/student-response';
 import { AddUpdateStudentRequest } from './dto/add-student-request';
 import { getConnection } from 'typeorm';
 import { Logger } from '@nestjs/common';
+import * as _ from 'lodash';
 
 export class StudentService {
   constructor(
@@ -44,6 +45,8 @@ export class StudentService {
 
   save(request: AddUpdateStudentRequest): Promise<Student> {
     try {
+      if (!this.validateStudent(request))
+        throw new Error('missing required fields');
       const student = {
         name: request.name,
         gender: request.gender,
@@ -59,6 +62,10 @@ export class StudentService {
       this.logger.error(ex);
       throw ex;
     }
+  }
+
+  validateStudent(request: AddUpdateStudentRequest): boolean {
+    return !_.isEmpty(request.name);
   }
 
   async saveList(students: AddUpdateStudentRequest[]): Promise<Student[]> {
@@ -77,10 +84,12 @@ export class StudentService {
     }
   }
 
-  async update(id: number, student: Student): Promise<Student> {
+  async update(id: number, student: AddUpdateStudentRequest): Promise<Student> {
     try {
       const existingStudent = await this.studentRepository.findOne(id);
       if (!existingStudent) throw new Error("couldn't find student");
+      if (!this.validateStudent(student))
+        throw new Error('missing required fields');
       Object.assign(existingStudent, student);
       const result = this.studentRepository.save(existingStudent);
       this.logger.log(`students id -${id} updated`);

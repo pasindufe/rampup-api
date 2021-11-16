@@ -34,7 +34,7 @@ export class StudentResolver {
     @Args('id') id: number,
     @Args('student') student: AddUpdateStudentRequest,
   ) {
-    return this.studentService.update(id, student as Student);
+    return this.studentService.update(id, student);
   }
 
   @Mutation(() => Boolean, { name: 'deleteStudent' })
